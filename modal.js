@@ -107,7 +107,6 @@ const Modal = function() {
         
         wrapper.style.top = `${wrapper.offsetTop - dragPos.y}px`;
         wrapper.style.left = `${wrapper.offsetLeft - dragPos.x}px`;
-
     }
 
     // thả modal ra
@@ -142,13 +141,13 @@ const Modal = function() {
     md.close = () => {         
         let mdl = md.modal;
         if (mdl.main.clear && mdl.main.clear === true) mdl.body.innerHTML = '';   
-        document.body.removeAttribute('style');
+        document.querySelector('html').classList.add('none-flow'); 
         mdl.main.classList.remove('open');  
     }
 
     md.open = ({ config }) => {    
         if (config)  Object.entries(config).map(([method, paramater])=> md[method]({modal: md.modal, paramater }));            
-        document.body.style.overflow = 'hidden'; 
+        document.querySelector('html').classList.add('none-flow');         
         md.modal.main.classList.add('open');        
     }
     
