@@ -73,7 +73,7 @@ const Modal = function() {
         return modalIn;
     }
  
-    // xoá tất cả nỗi dung của body trước đi đóng
+    // xoá tất cả nội dung của body trước đi đóng
     md.clear = ({modal, paramater }) => modal.main.clear = paramater;
     
     // thay đổi tiêu đề của modal
@@ -141,7 +141,7 @@ const Modal = function() {
     md.close = () => {         
         let mdl = md.modal;
         if (mdl.main.clear && mdl.main.clear === true) mdl.body.innerHTML = '';   
-        document.querySelector('html').classList.add('none-flow'); 
+        document.querySelector('html').classList.remove('none-flow');  
         mdl.main.classList.remove('open');  
     }
 
