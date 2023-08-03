@@ -1,9 +1,6 @@
-import { buildTag } from "../helpers/buildtag.js";
+import buildTag from "../helpers/buildtag.js";
 
-const isNodeDOM = element => {
-    return element instanceof Element;
-};
-const modalInnerHtml = `<div class="modal__wrapper"><div class="modal__element modal__header header">
+const MODAL_HTML = `<div class="modal__wrapper"><div class="modal__element modal__header header">
 <div class="modal__icon md-icon"><div class=exclamation></div></div>
 <div class="modal__title md-title"><h4 class=title>Cảnh báo</h4></div>
 <div class="modal__btn close"><div class=closeicon></div></div>
@@ -22,10 +19,14 @@ const Modal = function() {
         
         let modal = document.querySelector(`#${id}`);
 
-        if (! modal) modal = md.createModal({id, config});                   
-        else modal = md.collectModal({modal, config});
-        md.modal = modal;   
-        document.body.append(md.modal.main);   
+        if (! modal) {
+            modal = md.createModal({id, config});
+            document.body.append(modal.main);
+        } else {
+            if (! md.modal) modal = md.collectModal({modal, config});
+        }
+        if (! md.modal ) md.modal = modal;   
+           
         return md;
     }
     // đã tạo modal theo chuẩn
@@ -35,7 +36,7 @@ const Modal = function() {
             tag: 'div',
             className: 'modal',
             id,
-            innerHTML: modalInnerHtml,
+            innerHTML: MODAL_HTML,
         })
         modal = md.collectModal({ modal, config });
         return modal;
@@ -146,12 +147,13 @@ const Modal = function() {
     }
 
     md.open = ({ config }) => {    
-        if (config)  Object.entries(config).map(([method, paramater])=> md[method]({modal: md.modal, paramater }));            
+        if (config) Object.entries(config).map(([method, paramater])=> md[method]({modal: md.modal, paramater }));            
+        console.log(config);
         document.querySelector('html').classList.add('none-flow');         
         md.modal.main.classList.add('open');        
     }
     
  }
  
-export {  Modal };
+export default Modal;
  
